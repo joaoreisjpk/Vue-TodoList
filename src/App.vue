@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="Task Tracker" />
-    <AddTask>
+    <AddTask @add-task="addTask" />
     <Tasks
       @toggle-reminder="toggleReminder"
       @delete-task="deleteTask"
@@ -24,14 +24,16 @@ export default {
   },
   data() {
     return {
-      task: [],
+      tasks: [],
     };
   },
   methods: {
+    addTask(task) {
+      this.tasks= [...this.tasks, task]
+    },
     deleteTask(id) {
       const newArray = [...this.tasks];
       this.tasks = newArray.filter((task) => {
-        console.log(this.tasks);
         return task.id !== id;
       });
     },
@@ -41,7 +43,6 @@ export default {
       this.tasks = newArray.map((task) =>
         task.id === id ? { ...task, reminder: !task.reminder } : task
       );
-      console.log(this.tasks);
     },
   },
   created() {
